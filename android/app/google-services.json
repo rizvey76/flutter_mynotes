@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784983464063",
+    "project_id": "fluttternotes",
+    "storage_bucket": "fluttternotes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784983464063:android:c55f1ed12087fc0897c74a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_notes_projects"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGaeho_VMNTnDV_aTWXexcAw5sr4YBTlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
