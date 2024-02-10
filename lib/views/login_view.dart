@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_projects/firebase_options.dart';
+import 'package:flutter_notes_projects/views/verify_email_view.dart';
 
 class LoginView extends StatefulWidget{
   const LoginView({Key? key}):super(key: key);
@@ -37,12 +38,7 @@ class _LoginViewState extends State<LoginView>{
     appBar: AppBar(
       title: const Text("Login"),
     ),
-    body: FutureBuilder(future: Firebase.initializeApp(
-       options: DefaultFirebaseOptions.currentPlatform,
-    ), builder: (context,snapshot){
-      switch(snapshot.connectionState){
-       case ConnectionState.done:
-        return Column(
+    body: Column(
            children: [
             TextField(
               controller: _email,
@@ -59,6 +55,7 @@ class _LoginViewState extends State<LoginView>{
               controller: _password,
               obscureText: true,
               enableSuggestions: false,
+              autocorrect: false,
               decoration: const InputDecoration(
                 hintText: 'Enter your password here',
               ),
@@ -70,7 +67,11 @@ class _LoginViewState extends State<LoginView>{
                 final password=_password.text;
                 try{
                   final usercredential=await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-                  print(usercredential);
+                  // print(usercredential);
+
+
+                
+                  
                 }on FirebaseAuthException catch (e){
                   if(e.code == 'user-not-found'){
                      print('User not found');
@@ -78,14 +79,19 @@ class _LoginViewState extends State<LoginView>{
                      print('Wrong password');
                   }
                 }
-              }, child: const Text('Login')),
-           ],
-        );
 
-        default:
-          return const Text('Loading...');
-      }
-    }),
+              }, child: const Text('Login')),
+
+              TextButton(
+                onPressed: (){
+                  Navigator.of(context).pushNamedAndRemoveUntil('/register/', (route) => false);
+                },
+                 child: const Text('Not registered yet? Register here!'),
+                 ),
+
+   
+           ],
+        ),
   );
   }
 

@@ -37,12 +37,7 @@ class _RegisterViewState extends State<RegisterView>{
     appBar: AppBar(
       title: const Text("Register"),
     ),
-    body: FutureBuilder(future: Firebase.initializeApp(
-       options: DefaultFirebaseOptions.currentPlatform,
-    ), builder: (context,snapshot){
-      switch(snapshot.connectionState){
-       case ConnectionState.done:
-        return Column(
+    body: Column(
            children: [
             TextField(
               controller: _email,
@@ -59,6 +54,7 @@ class _RegisterViewState extends State<RegisterView>{
               controller: _password,
               obscureText: true,
               enableSuggestions: false,
+              autocorrect: false,
               decoration: const InputDecoration(
                 hintText: 'Enter your password here',
               ),
@@ -70,7 +66,9 @@ class _RegisterViewState extends State<RegisterView>{
                 final password=_password.text;
                 try{
                   final usercredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-                  print(usercredential);
+                  // print(usercredential);
+
+                  Navigator.of(context).pushNamedAndRemoveUntil('/verify/', (route) => false);
                 }on FirebaseAuthException catch (e){
                   if(e.code == 'weak-password'){
                      print('Weak password');
@@ -81,13 +79,14 @@ class _RegisterViewState extends State<RegisterView>{
                   }
                 }
               }, child: const Text('Register')),
-           ],
-        );
 
-        default:
-          return const Text('Loading...');
-      }
-    }),
+              TextButton(
+                onPressed: (){
+             Navigator.of(context).pushNamedAndRemoveUntil('/login/', (route) => false);
+                } , 
+              child: const Text('Already registered? Login here!')),
+           ],
+        ),
   );
   }
 
